@@ -4,8 +4,8 @@ import Image from "next/image";
 const Login = () => {
     return (
         <>
-            <div className="flex font-nunito">
-                <div className="flex flex-col bg-[#82C3EC]">
+            <div className="md:flex font-nunito">
+                <div className="hidden md:flex flex-col bg-[#82C3EC]">
                     <Image src={require('../assets/logo-remove.png')} className="ml-[5%]" width="150" height="40" alt="desc" ></Image>
                     <div className="flex justify-center">
                     <Image src={require('../assets/phone-form.png')} height="300" alt="desc" ></Image>
