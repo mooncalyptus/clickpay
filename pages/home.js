@@ -86,7 +86,10 @@ const Home = () => {
 
 
                         <div className="mt-5 ml-5 bg-white rounded-md px-[30px] py-[30px]">
-                            <span className="font-bold text-lg">Transaction History</span>
+                            <div className="flex">
+                            <span className="font-bold text-lg grow">Transaction History</span>
+                            <Link href="/history"> <span className="text-lg font-bold">View All</span></Link>
+                            </div>
                             <div className="flex mt-8">
                                 <Image src={require('../assets/profile.png')} alt="desc" ></Image>
                                 <div className="flex ml-[15px]">
