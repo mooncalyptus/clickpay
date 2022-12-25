@@ -39,51 +39,53 @@ const Home = () => {
         </div>
       </main>
 
-      <section className="bg-white flex mt-[5%]">
+      <section className="bg-white flex mt-[5%] justify-center items-center">
         <div>
           <Image src={require('../assets/brand-logo.png')} alt="desc" ></Image>
         </div>
       </section>
 
       <article className="font-nunito bg-[#E5E5E5]">
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-[120px]">
           <span className="text-6xl font-extrabold"><span className="text-[#82C3EC]">About</span> the Application.</span>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-[30px]">
           <div>We have some great features from the application and it’s totally </div>
         </div>
         <div className="flex justify-center">
           <div>free to use by all users around the world.</div>
         </div>
-        <div className="flex gap-5">
-          <div className="bg-white w-[25%] rounded-md">
-            <div className="bg-[#82C3EC] flex justify-center rounded-full">
+
+        {/* Section fitur */}
+        <div className="flex justify-center items-center gap-5 pt-[70px] pb-[120px]">
+          <div className="bg-white flex flex-col justify-center items-center px-[30px] rounded-md">
+            <div className="bg-[#F1F6F5] w-[60px] h-[60px] rounded-full flex justify-center items-center">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
             </div>
-            <div className="flex flex-col">
-              <div className="flex justify-center">
-                <span className="font-bold text-lg pt-9">24/7 Support</span>
-              </div>
-              <div className="flex justify-center">
-                <span className="text-lg px-7 pt-9 pb-[50px]">We have 24/7 contact support so you can contact us whenever you want and we will respond it.</span>
-              </div>
-            </div>
+            <div className="text-2xl font-bold text-center">24/7 Support</div>
+            <div className="break-words">We have 24/7 contact support so you </div>
+            <div>can contact us whenever you want </div>
+            <div className="pb-[50px]">and we will respond it.</div>
           </div>
 
-          <div className="bg-white">
-            <div className="flex justify-center">
-              <svg className="w-6 h-6 bg-[#82C3EC] rounded-full" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+          <div className="bg-white flex flex-col justify-center items-center px-[30px] rounded-md">
+            <div className="bg-[#F1F6F5] w-[60px] h-[60px] rounded-full flex justify-center items-center">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
             </div>
-            <div className="flex flex-col">
-              <span>Data Privacy</span>
-              <span>We make sure your data is safe in our database and we will encrypt any data you submitted to us.</span>
-            </div>
+            <div className="text-2xl font-bold text-center">Data Privacy</div>
+            <div>We make sure your data is safe in our </div>
+            <div>database and we will encrypt any </div>
+            <div className="pb-[50px]">data you submitted to us.</div>
           </div>
 
-          <div className="bg-white">
-            <div className="bg-[#82C3EC] rounded-full">
+          <div className="bg-white flex flex-col justify-center items-center px-[30px] rounded-md">
+            <div className="bg-[#F1F6F5] w-[60px] h-[60px] rounded-full flex justify-center items-center">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
             </div>
+            <div className="text-2xl font-bold text-center">Easy Download</div>
+            <div>Zwallet is 100% totally free to use it’s</div>
+            <div>now available on Google Play Store </div>
+            <div className="pb-[50px]">and App Store.</div>
           </div>
         </div>
       </article>
@@ -125,23 +127,34 @@ const Home = () => {
                 <span className="text-[#3A3D42] opacity-90">ClickPay come up with modern and sleek design and not complicated.</span>
               </div>
             </div>
-
-
           </div>
         </div>
       </section>
 
       <section className="bg-[#E5E5E5] font-nunito pb-[120px]">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pt-[120px]">
           <span className="text-6xl">What Users are <span className="text-[#82C3EC]">Saying.</span></span>
-          <span>We have some great features from the application and it’s totally free to use by all users around the world.</span>
+          <div className="text-lg pt-[30px]">We have some great features from the application and it’s totally free </div>
+          <div className="text-lg">to use by all users around the world.</div>
         </div>
-        <div className="bg-white flex flex-col items-center mx-[10%] rounded-md">
-          <Image src={require('../assets/profile-2.png')} width="120" height="120" alt="desc" ></Image>
-          <span className="text-[26px] font-bold">Alex Hansinburg</span>
-          <span className="text-[#56585B] text-5">Designer</span>
-          <div className="p-[60px]">
-          <span>“This is the most outstanding app that I’ve ever try in my live, this app is such an amazing masterpiece and it’s suitable for you who is bussy with their bussiness and must transfer money to another person aut there. Just try this app and see the power!”</span>
+
+        {/* Section user review */}
+        <div className="flex justify-center items-center mt-[60px]">
+          <div className="bg-white w-[60px] h-[60px] rounded-full flex justify-center items-center mr-[46px]">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          </div>
+
+          <div className="bg-white flex flex-col justify-center items-center px-[60px] py-[60px] rounded-md">
+            <Image src={require('../assets/profile-2.png')} width="120" height="120" alt="desc" ></Image>
+            <div className="font-bold text-[26px]">Alex Hansinburg</div>
+            <div className="text-[20px] text-[#56585B]">Designer</div>
+            <div>“This is the most outstanding app that I’ve ever try in my live, this app is such an amazing masterpiece and </div>
+            <div>it’s suitable for you who is bussy with their bussiness and must transfer money to another person aut there.</div>
+            <div>Just try this app and see the power!”</div>
+          </div>
+
+          <div className="bg-white w-[60px] h-[60px] rounded-full flex justify-center items-center ml-[46px]">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </div>
         </div>
       </section>
