@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Footer from "./footer";
 
-
 const Home = () => {
   return (
     <>
@@ -13,8 +12,8 @@ const Home = () => {
           </div>
           <div className="flex justify-center items-center mr-[5%]">
             <div className="flex gap-7">
-              <button className="outline outline-2 text-white py-2 px-9 rounded-md hover:bg-white hover:text-[#82C3EC]">Login</button>
-              <button className="outline outline-2 text-[#82C3EC] bg-white py-2 px-9 rounded-md hover:bg-[#82C3EC] hover:text-white">Sign Up</button>
+             <Link href="/login"><button className="outline outline-2 text-white py-2 px-9 rounded-md hover:bg-white hover:text-[#82C3EC]">Login</button></Link>
+             <Link href="/signup"> <button className="outline outline-2 text-[#82C3EC] bg-white py-2 px-9 rounded-md hover:bg-[#82C3EC] hover:text-white">Sign Up</button></Link>
             </div>
           </div>
         </div>
