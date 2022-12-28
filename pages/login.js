@@ -25,13 +25,6 @@ const Login = () => {
     });
     const url = "https://68xkph-8888.preview.csb.app/auth/login"
     const handleSubmit = async (value) => {
-        // try {
-        //     const response = await axios.post(url, value);
-        //     console.log(response);
-        //     router.push("/login")
-        // } catch (error) {
-        //     console.error(error);
-        // }
         const email = value.email
         const password = value.password
         dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))

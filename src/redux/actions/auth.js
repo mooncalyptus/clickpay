@@ -1,6 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import jwt from 'jsonwebtoken';
+
+export const decodeToken = (token) => {
+  const decoded = jwt.decode(token);
+  return {
+    type: DECODE_TOKEN,
+    payload: decoded,
+  };
+};
+
 export const Login = createAsyncThunk(
     "auth/login",
     async({email, password, cb}, {rejecWithValue}) => {
