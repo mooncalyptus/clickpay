@@ -54,7 +54,7 @@ const ChangePassword = () => {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
+                        <input type="text" id="input-group-1" className="h-11 px-5 pl-10 w-full outline-none border-b-2 border-gray-700 focus:border-[#CE7777] peer" placeholder="Input your Password"></input>
                     </div>
 
                     <div className="relative mb-6 w-80">
@@ -64,7 +64,7 @@ const ChangePassword = () => {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
+                        <input type="text" id="input-group-1" className="h-11 px-5 pl-10 w-full outline-none border-b-2 border-gray-700 focus:border-[#CE7777] peer" placeholder="New Password"></input>
                     </div>
 
                     <div className="relative mb-6 w-80">
@@ -74,7 +74,7 @@ const ChangePassword = () => {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
+                        <input type="text" id="input-group-1" className="h-11 px-5 pl-10 w-full outline-none border-b-2 border-gray-700 focus:border-[#CE7777] peer" placeholder="Repeat new Password"></input>
                     </div>
 
                     <button className="bg-[#82C3EC] w-80 py-4 rounded-lg">Change Password</button>

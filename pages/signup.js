@@ -27,6 +27,9 @@ const SignUp = () => {
         // value.preventDefault();
         try {
             const response = await axios.post(url, value);
+            if(value){
+                alert('login berhasil')
+            }
             console.log(response);
             router.push("/login")
         } catch (error) {

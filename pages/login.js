@@ -27,7 +27,11 @@ const Login = () => {
     const handleSubmit = async (value) => {
         const email = value.email
         const password = value.password
-        dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
+        if(value){
+            alert("Login berhasil")
+            dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
+        }
+        // dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
     };
     const formik = useFormik({
         initialValues: {
