@@ -26,7 +26,7 @@ const PinSuccess = () => {
                     <span className="text-2xl font-bold mt-[50px]">Your PIN Was Successfully Created</span>
                     <span className="text-base text-[#3A3D42] opacity-60 mt-10">Your PIN was successfully created and you can now access all the features in ClickPay.</span>
                     <div className="flex justify-center mt-[10%]">
-                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go to Dashboard</button>
+                            <Link href="/home"><button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go to Dashboard</button></Link>
                         </div>
                 </div>
             </div>

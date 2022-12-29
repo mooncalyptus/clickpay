@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
+
     const router = useRouter()
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
@@ -24,7 +25,7 @@ const SignUp = () => {
     const handleSubmit = async (value) => {
         // value.preventDefault();
         try {
-            const response = await axios.post(url, value );
+            const response = await axios.post(url, value);
             console.log(response);
             router.push("/login")
         } catch (error) {
@@ -65,6 +66,14 @@ const SignUp = () => {
                     <span className="text-base text-[#3A3D42] opacity-60 pt-[5%]">Transfering money is eassier than ever, you can access ClickPay wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</span>
                     {/* FORM REGISTER */}
                     <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
+                    <div className="hidden">
+                            <div className="alert alert-success shadow-lg">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span>Register success</span>
+                                </div>
+                            </div>
+                            </div>
                         <input
                             id="firstName"
                             name="firstName"
@@ -125,14 +134,14 @@ const SignUp = () => {
                                     onClick={() => setShowPassword(!showPassword)}
                                 />
                             )}
-                              {formik.errors.password && <div>{formik.errors.password}</div>}
+                            {formik.errors.password && <div>{formik.errors.password}</div>}
                         </div>
 
                         <button type="submit" className="border-[1px] border-solid border-[#82C3EC] bg-[#82C3EC] w-[100%] pl-3 h-[50px] rounded-[4px] text-white">Submit</button>
                     </form>
 
                     <div className="flex justify-center mt-10 mb-12">
-                        <span>Already have an account? Let’s <Link href="/login">Login</Link></span>
+                        <span>Already have an account? <Link href="/login">Let’s Login</Link></span>
                     </div>
                 </div>
             </div>

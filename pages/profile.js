@@ -2,11 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./navbar";
 import FooterUser from "./footer-user";
-import ModalTopUp from "./modal-topup";
+import { useSelector } from "react-redux";
 import { useState } from "react";
+import React from "react";
+import axios from "axios";
+import ModalTopUp from "./modal-topup";
 
 const Profile = () => {
+    const [profile, setProfile] = React.useState({});
+    const token = useSelector((state)=> state.auth.token)
     const [showModal, setShowModal] = useState(false)
+    const fetchProfile = async () => {
+        try {
+          const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
+            headers:  {
+                "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setProfile(response.data.results);
+        } catch (error) {
+          if (error) throw error;
+        }
+      };
+      React.useEffect(()=>{
+        // getProfile(token)
+        fetchProfile()
+    }, [])
+    console.log(profile)
     return (
         <>
             <Navbar></Navbar>
@@ -17,17 +40,18 @@ const Profile = () => {
                     <div className="h-screen">
                         <div className="flex gap-x-5">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Dashboard</span>
+                           <Link href="/home"> <span className="text-[#3A3D42] opacity-80">Dashboard</span></Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Transfer</span>
+                           <Link href="/search-receiver"> <span className="text-[#3A3D42] opacity-80">Transfer</span> </Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Top Up</span>
+                            <button className="text-[#3A3D42] opacity-80" onClick={()=> setShowModal(true)}>Top Up</button>
+                            <ModalTopUp isVisible={showModal} onClose={()=> setShowModal(false)}></ModalTopUp>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -54,7 +78,7 @@ const Profile = () => {
                             <div>Edit</div>
                         </div>
 
-                        <div>Robert Chandler</div>
+                        <div>{profile?.firstName} {profile?.lastName}</div>
 
                         <div>+62 813-9387-7946</div>
 

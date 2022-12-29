@@ -1,8 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import FooterUser from "./footer-user";
 import Navbar from "./navbar";
+import ModalTopUp from "./modal-topup";
+import { useState } from "react";
 
 const SearchReceiver = () => {
+    const [showModal, setShowModal] = useState(false)
     return (
         <>
             <Navbar></Navbar>
@@ -12,7 +16,7 @@ const SearchReceiver = () => {
                     <div className="h-screen">
                         <div className="flex gap-x-5">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Dashboard</span>
+                           <Link href="/home"> <span className="text-[#3A3D42] opacity-80">Dashboard</span></Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -22,12 +26,13 @@ const SearchReceiver = () => {
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Top Up</span>
+                            <button className="text-[#3A3D42] opacity-80" onClick={()=> setShowModal(true)}>Top Up</button>
+                            <ModalTopUp isVisible={showModal} onClose={()=> setShowModal(false)}></ModalTopUp>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Profile</span>
+                            <Link href="/profile"> <span className="text-[#3A3D42] opacity-80">Profile</span></Link>
                         </div>
                     </div>
 

@@ -12,8 +12,7 @@ const PinBlank = () => {
     console.log(decode)
     const userId = decode.id
     console.log(userId)
-    const dispatch = useDispatch()
-    const router = useRouter
+    const router = useRouter()
 
     const [pin1, setPin1] = useState(0);
     const [pin2, setPin2] = useState(0);
@@ -28,7 +27,6 @@ const PinBlank = () => {
     const input4 = useRef(null)
     const input5 = useRef(null)
     const input6 = useRef(null)
-
     const createPin = async (e) => {
         e.preventDefault()
         const pin1 = e.target.pin1.value
@@ -48,13 +46,12 @@ const PinBlank = () => {
 
         try {
             const { data } = await axios.post("https://68xkph-8888.preview.csb.app/auth/set-pin", { userId: decode.id, pin })
-            if(true){
-                router.push("/pin-success")
-            }
+            router.push("/pin-success")
         } catch (err) {
             console.log(err);
         }
     }
+
     const changeInput = (e) => {
         if (e.target.value.length > 1) {
             e.target.value = e.target.value.slice(0, 1);
@@ -118,6 +115,7 @@ const PinBlank = () => {
                         and Your Data With 6 Digits PIN
                         That You Created Yourself.</span>
                     <span className="text-base text-[#3A3D42] opacity-60 pt-[5%]">Create 6 digits pin to secure all your money and your data in ClickPay app. Keep it secret and don’t tell anyone about your ClickPay account password and the PIN.</span>
+
                     <form className="pt-[5%]" onSubmit={createPin}>
                         <div className="flex gap-[23px] justify-center">
                             <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin1 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
@@ -207,29 +205,15 @@ const PinBlank = () => {
                                     maxLength="1"
                                 />
                             </div>
-                            {/* <input type="text" id="pin1"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin1}></input>
-                                <input type="text" id="pin2"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin2}></input>
-                                <input type="text" id="pin3"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin3}></input>
-                                <input type="text" id="pin4"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin4}></input>
-                                <input type="text" id="pin5"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin5}></input>
-                                <input type="text" id="pin6"
-                                    name="pin" className="border border-2 w-[53px] h-[65px] rounded-md" onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} value={formik.values.pin6}></input> */}
                         </div>
                         <div className="flex justify-center mt-[10%]">
                             <button type="submit" class={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${pin1 && pin2 && pin3 && pin4 && pin5 && pin6 ? "bg-[#2C74B3]" : "bg-[#DADADA]"}`} disabled={pin1 && pin2 && pin3 && pin4 && pin5 && pin6 ? false : true}>Submit</button>
                         </div>
                     </form>
+                    <div className="flex flex-col justify-center items-center mt-[30px] gap-4">
+                        <div>Already have pin?</div>
+                    <Link href="/home"><button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Go to Dashboard</button></Link>
+                    </div>
                 </div>
             </div>
         </>

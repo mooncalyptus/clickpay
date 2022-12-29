@@ -1,7 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import React from "react";
 
 const Navbar = () => {
+    const [profile, setProfile] = React.useState({});
+    const token = useSelector((state)=> state.auth.token)
+    const fetchProfile = async () => {
+        try {
+          const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
+            headers:  {
+                "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setProfile(response.data.results);
+        } catch (error) {
+          if (error) throw error;
+        }
+      };
+    React.useEffect(()=>{
+        // getProfile(token)
+        fetchProfile()
+    }, [])
+    console.log(profile)
     return (
         <>
             <div className="flex bg-[#82C3EC] font-nunito">
@@ -14,7 +37,7 @@ const Navbar = () => {
                         <Image src={require('../assets/profile.png')} alt="desc" ></Image>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-lg font-bold">Robert Chandler</span>
+                        <Link href="/profile"><span className="text-lg font-bold">{profile?.firstName}</span></Link>
                         <span className="text-[13px] text-[#3A3D42] opacity-90">+62 8139 3877 7946</span>
                     </div>
                     <div>

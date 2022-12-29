@@ -22,7 +22,7 @@ const Home = () => {
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Transfer</span>
+                             <Link href="/search-receiver"><span className="text-[#3A3D42] opacity-80">Transfer</span></Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -33,7 +33,7 @@ const Home = () => {
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                            <span className="text-[#3A3D42] opacity-80">Profile</span>
+                            <Link href="/profile"> <span className="text-[#3A3D42] opacity-80">Profile</span></Link>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@ const Home = () => {
                                 <span>Transfer</span>
                             </button>
 
-                            <button className="flex bg-white text-[#82C3EC] rounded-md p-4">
+                            <button className="flex bg-white text-[#82C3EC] rounded-md p-4" onClick={()=> setShowModal(true)}>
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                                 <span>Top Up</span>
                             </button>
