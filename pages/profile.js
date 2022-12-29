@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "./navbar";
-import FooterUser from "./footer-user";
+import Navbar from "../components/navbar";
+import FooterUser from "../components/footer-user";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import React from "react";
 import axios from "axios";
-import ModalTopUp from "./modal-topup";
+import ModalTopUp from "../components/modal-topup";
 
 const Profile = () => {
     const [profile, setProfile] = React.useState({});

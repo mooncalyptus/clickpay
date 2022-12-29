@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import FooterUser from "./footer-user";
-import Navbar from "./navbar";
-import ModalTopUp from "./modal-topup";
+import FooterUser from "../components/footer-user";
+import Navbar from "../components/navbar";
+import ModalTopUp from "../components/modal-topup";
 import { useState } from "react";
 
 const SearchReceiver = () => {

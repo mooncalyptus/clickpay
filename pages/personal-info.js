@@ -1,6 +1,6 @@
 import Image from "next/image";
-import FooterUser from "./footer-user";
-import Navbar from "./navbar";
+import FooterUser from "../components/footer-user";
+import Navbar from "../components/navbar";
 
 const PersonalInfo = () => {
     return (

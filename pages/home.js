@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "./navbar";
-import FooterUser from "./footer-user";
-import ModalTopUp from "./modal-topup";
+import Navbar from "../components/navbar";
+import FooterUser from "../components/footer-user";
+import ModalTopUp from "../components/modal-topup";
 import { useState } from "react";
 
 const Home = () => {
