@@ -1,12 +1,34 @@
+import React from "react";
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/navbar";
 import FooterUser from "../components/footer-user";
 import ModalTopUp from "../components/modal-topup";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false)
+    const token = useSelector((state)=> state.auth.token)
+    const [profile, setProfile] = useState(false)
+    const fetchProfile = async () => {
+        try {
+          const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
+            headers:  {
+                "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setProfile(response.data.results);
+        } catch (error) {
+          if (error) throw error;
+        }
+      };
+      React.useEffect(()=>{
+        fetchProfile()
+    }, [])
+    console.log(profile)
     return (
         <>
             <Navbar></Navbar>
@@ -50,7 +72,7 @@ const Home = () => {
                         {/* Section Balance */}
                         <div className="flex flex-col mr-[400px] justify-center pl-[30px]">
                             <span className="text-lg text-[#E0E0E0]">Balance</span>
-                            <span className="text-[40px] fon-bold text-white">120.000</span>
+                            <span className="text-[40px] fon-bold text-white">{profile?.balance}</span>
                             <span className="text-sm text-[#E0E0E0] font-semibold">+62 813-9387-7946</span>
                         </div>
                         <div className="flex flex-col gap-4 justify-center items-center pr-[30px] py-[30px]">

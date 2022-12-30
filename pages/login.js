@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import axios from "axios";
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -29,9 +28,8 @@ const Login = () => {
         const password = value.password
         if(value){
             alert("Login berhasil")
-            dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
         }
-        // dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
+        dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
     };
     const formik = useFormik({
         initialValues: {

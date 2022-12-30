@@ -10,7 +10,6 @@ import Alert from "../components/alert";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
-
     const router = useRouter()
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
@@ -48,7 +47,6 @@ const SignUp = () => {
     });
     return (
         <>
-        <Alert></Alert>
             <div className="md:flex font-nunito">
                 <div className="hidden md:flex flex-col bg-[#82C3EC] overflow-hidden">
                     <Image src={require('../assets/logo-remove.png')} className="ml-[5%]" width="150" height="40" alt="desc" ></Image>
