@@ -1,6 +1,6 @@
 import Image from "next/image";
-import FooterUser from "./footer-user";
-import Navbar from "./navbar";
+import FooterUser from "../components/footerUser";
+import Navbar from "../components/navbar";
 
 const Success = () => {
     return (

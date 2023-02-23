@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const axiosHelper = axios.create({
+const http = axios.create({
     baseURL: process.env.BACKEND_URL,
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  export default axiosHelper
+  export default http

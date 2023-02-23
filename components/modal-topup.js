@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import axios from "axios"
+// import axios from "axios"
+import http from "../src/helpers/http";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 
@@ -11,10 +12,10 @@ const ModalTopUp = ({ isVisible, onClose }) => {
     const userId = decode.id
     console.log(userId)
     const [formData, setFormData] = useState({})
-    const url = "https://68xkph-8888.preview.csb.app/transactions/topup"
+    // const url = "https://68xkph-8888.preview.csb.app/transactions/topup"
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(url, {userId: decode.id,formData})
+        http().post(url, {userId: decode.id,formData})
           .then((response) => {
             console.log(response);
           })
