@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/navbar";
-import FooterUser from "../components/footer-user";
+import FooterUser from "../components/footerUser";
 import ModalTopUp from "../components/modal-topup";
 import { useSelector } from "react-redux";
 import { useState } from "react";

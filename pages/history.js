@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import FooterUser from "../components/footer-user";
+import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
 
 const History = () => {
