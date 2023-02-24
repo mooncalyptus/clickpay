@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "axios";
+import http from "../src/helpers/http";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/navbar";
-import FooterUser from "../components/footerUser";
 import ModalTopUp from "../components/modal-topup";
+import FooterUser from "../components/footerUser";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -12,22 +12,22 @@ const Home = () => {
     const [showModal, setShowModal] = useState(false)
     const token = useSelector((state)=> state.auth.token)
     const [profile, setProfile] = useState(false)
-    const fetchProfile = async () => {
-        try {
-          const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
-            headers:  {
-                "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setProfile(response.data.results);
-        } catch (error) {
-          if (error) throw error;
-        }
-      };
-      React.useEffect(()=>{
-        fetchProfile()
-    }, [])
+    // const fetchProfile = async () => {
+    //     try {
+    //       const response = await http().get("/profile", {
+    //         headers:  {
+    //             "Content-Type": "application/json",
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       });
+    //       setProfile(response.data.results);
+    //     } catch (error) {
+    //       if (error) throw error;
+    //     }
+    //   };
+    //   React.useEffect(()=>{
+    //     fetchProfile()
+    // }, [])
     console.log(profile)
     return (
         <>
@@ -175,7 +175,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <FooterUser></FooterUser>
+            <FooterUser />
         </>
     )
 }

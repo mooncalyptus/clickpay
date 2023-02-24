@@ -29,7 +29,7 @@ const Login = () => {
         if(value){
             alert("Login berhasil")
         }
-        dispatch(loginAction({email, password, cb: ()=> router.push("/pin-blank")}))
+        dispatch(loginAction({email, password, cb: ()=> router.push("/home")}))
     };
     const formik = useFormik({
         initialValues: {
