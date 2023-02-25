@@ -23,9 +23,10 @@ const Navbar = () => {
         }
       };
     React.useEffect(()=>{
-        // getProfile(token)
-        fetchProfile()
-    }, [])
+        if(token){
+            fetchProfile()
+        }
+    }, [token])
     console.log(profile)
     return (
         <>
@@ -36,7 +37,11 @@ const Navbar = () => {
 
                 <div className="flex justify-center items-center gap-5 mr-[10%]">
                     <div>
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
+                    {profile?.picture ? (
+                                <Image src={"https://68xkph-8888.preview.csb.app/upload/" + (profile?.picture)} alt="profile" width={40} height={40} className="rounded-lg"></Image>
+                            ) : (
+                                <Image src={require('../assets/profile.png')} alt="desc" ></Image>    
+                            )}
                     </div>
                     <div className="flex flex-col">
                         <Link href="/profile"><span className="text-lg font-bold">{profile?.firstName}</span></Link>

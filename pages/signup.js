@@ -29,7 +29,7 @@ const SignUp = () => {
             const response = await http().post("/auth/register", value)
             const token = response?.data?.results?.token
             dispatch(loginAction({token}))
-            router.push("/home")
+            router.push("/login")
         } catch (error) {
             console.log(error)
         }

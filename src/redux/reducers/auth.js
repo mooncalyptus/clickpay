@@ -11,8 +11,8 @@ const authReducer = createSlice({
             state.token = payload
         },
         logout: (state, action) => {
-            // state.token = null;
-            return initialState
+            state.token = null;
+            // return initialState
           },
     },
     extraReducers: (build)=> {}

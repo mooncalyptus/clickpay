@@ -8,13 +8,16 @@ import React from "react";
 import { logout as logoutAction } from "../src/redux/reducers/auth";
 import { useRouter } from "next/router";
 import http from "../src/helpers/http";
-import axios from "axios";
 import ModalTopUp from "../components/modal-topup";
+import FeatherIcon from 'feather-icons-react'
+import withAuth from "../components/hoc/withAuth";
 
 const Profile = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const [profile, setProfile] = React.useState({});
+    const [preview, setPreview] = useState('')
+    const [file, setFiles] = useState('')
     const token = useSelector((state) => state.auth.token)
     const [showModal, setShowModal] = useState(false)
     const fetchProfile = async () => {
@@ -23,6 +26,27 @@ const Profile = () => {
             setProfile(response?.data?.results)
         } catch (error) {
             if (error) throw error
+        }
+    }
+
+    const upload = async (e) => {
+        if (file?.size > 1024 * 1024 * 2) {
+            window.alert("File too large")
+        } else {
+            try {
+                const form = new FormData()
+                form.append("picture", file)
+                const { data } = await http(token).post("/profile", form, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                fetchProfile()
+                document.getElementById('my-modal-3').click()
+            } catch (error) {
+                // window.alert(error.response.data.message)
+                console.log(error)
+            }
         }
     }
     // const fetchProfile = async () => {
@@ -87,12 +111,11 @@ const Profile = () => {
                 <div className="ml-5 mr-[5%] w-full bg-white rounded-md">
                     <div className="flex flex-col justify-center items-center pt-6 gap-[10px]">
                         <div>
-                            {/* {profile?.picture ? (
-                                <Image src={profile?.picture} alt="profile" width={400} height={400}></Image>
+                            {profile?.picture ? (
+                                <Image src={"https://68xkph-8888.preview.csb.app/upload/" + (profile?.picture)} alt="profile" width={80} height={80} className="rounded-lg"></Image>
                             ) : (
                                 <Image src={require('../assets/profile.png')} alt="desc" ></Image>    
-                            )} */}
-                            <Image src={require('../assets/profile.png')} alt="desc" ></Image>  
+                            )}
                         </div>
 
 
@@ -105,8 +128,17 @@ const Profile = () => {
                             <div className="modal">
                                 <div className="modal-box relative">
                                     <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                    <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
-                                    <p className="py-4">Ini modal</p>
+                                    <div className="flex flex-col justify-center items-center gap-3">
+                                            <div>Upload Image</div>
+                                            {preview && <img src={preview} alt="profile" className="w-24 h-24 border border-black rounded-full" />}
+                                            {!preview &&
+                                                <div className="border border-black py-6 px-6 rounded-full w-24 h-24 overflow-hidden">
+                                                    <FeatherIcon icon="upload-cloud" size={48} />
+                                                </div>
+                                            }
+                                            <input type="file" onChange={e => { setPreview(URL.createObjectURL(e.target.files[0])); setFiles(e.target.files[0]) }} className="file-input w-full max-w-xs" />
+                                            <button onClick={upload} className="btn btn-outline btn-info">Upload Image</button>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -123,12 +155,12 @@ const Profile = () => {
                                 </div>
                             </button> </Link>
 
-                            <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg">
+                           <Link href="/change-password"> <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg">
                                 <div className="grow">Change Password</div>
                                 <div>
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                 </div>
-                            </button>
+                            </button> </Link>
 
                             <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg">
                                 <div className="grow">Change PIN</div>

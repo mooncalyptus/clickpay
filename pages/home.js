@@ -7,6 +7,7 @@ import ModalTopUp from "../components/modal-topup";
 import FooterUser from "../components/footerUser";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import withAuth from "../components/hoc/withAuth";
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false)
@@ -180,4 +181,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default withAuth(Home)

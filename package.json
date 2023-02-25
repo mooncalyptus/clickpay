@@ -15,6 +15,7 @@
     "daisyui": "^2.46.0",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.0",
+    "feather-icons-react": "^0.6.2",
     "formik": "^2.2.9",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
@@ -26,7 +27,8 @@
     "react-router-dom": "^6.6.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "@iconify/react": "^4.0.1",
