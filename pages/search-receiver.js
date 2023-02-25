@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import FooterUser from "../components/footer-user";
+import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
 import ModalTopUp from "../components/modal-topup";
 import { useState } from "react";
