@@ -1,16 +1,17 @@
 import React from "react";
-import Image from "next/image";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import http from "../src/helpers/http";
+import Image from "next/image";
 import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
-import http from "../src/helpers/http";
-import Link from "next/link";
 
-const PersonalInfo = () => {
+const ChangePhoneNumber = () => {
+    const router = useRouter()
+    const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
-    const [profile, setProfile] = React.useState('')
     const getProfile = async () => {
-        try{
+        try {
             const response = await http(token).get("/profile")
             setProfile(response?.data?.results)
         } catch (error) {
@@ -19,11 +20,22 @@ const PersonalInfo = () => {
     }
 
     React.useEffect(() => {
-        if(token) {
+        if (token) {
             getProfile()
         }
     }, [token])
 
+    const updatePhoneNumber = async (e) => {
+        try {
+            e.preventDefault()
+            const values = { phoneNumber: e.target.phoneNumber.value }
+            const { data } = await http(token).post("/profile/phone-number", values)
+            alert('nomor berhasil diupdate')
+            router.push('/personal-info')
+        } catch (error) {
+            if (error) throw error
+        }
+    }
     return (
         <>
             <Navbar></Navbar>
@@ -61,58 +73,31 @@ const PersonalInfo = () => {
                 {/* Konten kanan */}
                 <div className="ml-5 mr-[5%] w-full bg-white rounded-md pl-[50px] py-[30px] pr-[30px]">
                     <div className="flex center-items">
-                        <span className="font-bold text-lg grow">Personal Information</span>
+                        <span className="font-bold text-lg grow">Edit Phone Number</span>
                     </div>
                     <div className="text-base text-[#7A7886] mt-[25px]">
-                        <div>We got your personal information from the sign up proccess.</div>
-                        <div>If you want to make changes on</div>
-                        <div>your information, contact our support.</div>
+                        <div>Add at least one phone number for the transfer ID so you can start transfering your money to another user.</div>
                     </div>
 
-                    <div className="flex mt-8 bg-[#FFFFFF] drop-shadow-lg">
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="text-base text-[#7A7886]">First Name</span>
-                                <span className="font-bold text-[22px]">{profile?.firstName}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <form onSubmit={updatePhoneNumber}>
+                        <div className="relative mb-6 w-80">
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                </svg>
 
-                    <div className="flex mt-8 bg-[#FFFFFF] drop-shadow-lg">
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="text-base text-[#7A7886]">Last Name</span>
-                                <span className="font-bold text-[22px]">{profile?.lastName}</span>
                             </div>
+                            <input type="text" id="phoneNumber" className="h-11 px-5 pl-10 w-full outline-none border-b-2 border-gray-700 focus:border-[#CE7777] peer" placeholder="Enter your Phone Number" name="phoneNumber" defaultValue={profile.phoneNumber}></input>
                         </div>
-                    </div>
+                    <button type="submit" className="bg-[#82C3EC] w-80 py-4 rounded-lg">Change Phone Number</button>
+                    </form>
 
-                    <div className="flex mt-8 bg-[#FFFFFF] drop-shadow-lg">
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="text-base text-[#7A7886]">Verified E-mail</span>
-                                <span className="font-bold text-[22px]">{profile?.email}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8 bg-[#FFFFFF] drop-shadow-lg">
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="text-base text-[#7A7886]">Phone Number</span>
-                                <div className="flex">
-                                <span className="font-bold text-[22px] grow">{profile?.phoneNumber}</span>
-                              <Link href="/changePhoneNumber">  <span className="text-base text-[#82C3EC] font-semibold pr-5">Manage</span> </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
-           <FooterUser />
+            <FooterUser></FooterUser>
         </>
     )
 }
 
-export default PersonalInfo
+export default ChangePhoneNumber

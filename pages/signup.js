@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import http from "../src/helpers/http";
+import {login as loginAction} from "../src/redux/reducers/auth"
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
-import Alert from "../components/alert";
 
 const SignUp = () => {
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter()
     const validationSchema = Yup.object().shape({
@@ -21,20 +23,31 @@ const SignUp = () => {
             .min(8, 'Password must be at least 8 characters')
             .required('Password is required'),
     });
-    const url = "https://68xkph-8888.preview.csb.app/auth/register"
+
     const handleSubmit = async (value) => {
-        // value.preventDefault();
         try {
-            const response = await axios.post(url, value);
-            if(value){
-                alert('login berhasil')
-            }
-            console.log(response);
-            router.push("/login")
+            const response = await http().post("/auth/register", value)
+            const token = response?.data?.results?.token
+            dispatch(loginAction({token}))
+            router.push("/home")
         } catch (error) {
-            console.error(error);
+            console.log(error)
         }
-    };
+    }
+    // const url = "https://68xkph-8888.preview.csb.app/auth/register"
+    // const handleSubmit = async (value) => {
+    //     // value.preventDefault();
+    //     try {
+    //         const response = await axios.post(url, value);
+    //         if(value){
+    //             alert('login berhasil')
+    //         }
+    //         console.log(response);
+    //         router.push("/login")
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
     const formik = useFormik({
         initialValues: {
             firstName: '',

@@ -1,15 +1,17 @@
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import React from "react";
+import { useRouter } from "next/router";
+import http from "../src/helpers/http"
 
 const Navbar = () => {
+    const router = useRouter()
     const [profile, setProfile] = React.useState({});
     const token = useSelector((state)=> state.auth.token)
     const fetchProfile = async () => {
         try {
-          const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
+          const response = await http().get("/profile", {
             headers:  {
                 "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -38,7 +40,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex flex-col">
                         <Link href="/profile"><span className="text-lg font-bold">{profile?.firstName}</span></Link>
-                        <span className="text-[13px] text-[#3A3D42] opacity-90">+62 8139 3877 7946</span>
+                        <span className="text-[13px] text-[#3A3D42] opacity-90">{profile?.phoneNumber}</span>
                     </div>
                     <div>
                         <div className="dropdown dropdown-end">

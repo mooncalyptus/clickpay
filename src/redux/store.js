@@ -1,11 +1,13 @@
-import {configureStore} from '@reduxjs/toolkit'
-import thunk from 'redux-thunk'
-import { persistStore } from 'redux-persist'
+import { configureStore } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import {persistStore} from 'redux-persist'
 import reducer from './reducers'
 
-export const store = configureStore({
+const store = configureStore({
     reducer,
     middleware: [thunk]
 })
 
-export const persistor = persistStore(store)
+const persistor = persistStore(store)
+
+export {store, persistor}

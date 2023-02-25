@@ -7,6 +7,7 @@ import { useState } from "react";
 import React from "react";
 import { logout as logoutAction } from "../src/redux/reducers/auth";
 import { useRouter } from "next/router";
+import http from "../src/helpers/http";
 import axios from "axios";
 import ModalTopUp from "../components/modal-topup";
 
@@ -17,20 +18,27 @@ const Profile = () => {
     const token = useSelector((state) => state.auth.token)
     const [showModal, setShowModal] = useState(false)
     const fetchProfile = async () => {
-        try {
-            const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setProfile(response.data.results);
+        try{
+            const response = await http(token).get("/profile")
+            setProfile(response?.data?.results)
         } catch (error) {
-            if (error) throw error;
+            if (error) throw error
         }
-    };
+    }
+    // const fetchProfile = async () => {
+    //     try {
+    //         const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         });
+    //         setProfile(response.data.results);
+    //     } catch (error) {
+    //         if (error) throw error;
+    //     }
+    // };
     React.useEffect(() => {
-        // getProfile(token)
         fetchProfile()
     }, [])
     console.log(profile)
@@ -79,7 +87,12 @@ const Profile = () => {
                 <div className="ml-5 mr-[5%] w-full bg-white rounded-md">
                     <div className="flex flex-col justify-center items-center pt-6 gap-[10px]">
                         <div>
-                            <Image src={require('../assets/profile.png')} alt="desc" ></Image>
+                            {/* {profile?.picture ? (
+                                <Image src={profile?.picture} alt="profile" width={400} height={400}></Image>
+                            ) : (
+                                <Image src={require('../assets/profile.png')} alt="desc" ></Image>    
+                            )} */}
+                            <Image src={require('../assets/profile.png')} alt="desc" ></Image>  
                         </div>
 
 
@@ -93,22 +106,22 @@ const Profile = () => {
                                 <div className="modal-box relative">
                                     <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                                     <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
-                                    <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
+                                    <p className="py-4">Ini modal</p>
                                 </div>
                             </div>
                         </div>
 
                         <div>{profile?.firstName} {profile?.lastName}</div>
 
-                        <div>+62 813-9387-7946</div>
+                        <div>{profile?.phoneNumber}</div>
 
                         <div className="flex flex-col gap-5">
-                            <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg">
+                          <Link href="/personal-info">  <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg"> 
                                 <div className="grow">Personal Information</div>
                                 <div>
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                 </div>
-                            </button>
+                            </button> </Link>
 
                             <button className="flex bg-[#82C3EC] py-[18px] px-5 w-64 rounded-lg">
                                 <div className="grow">Change Password</div>

@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import http from "../src/helpers/http";
+import jwt_decode from "jwt-decode";
 import Image from "next/image";
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
-import {Login as loginAction} from "../src/redux/actions/auth"
+import { login as loginAction } from "../src/redux/reducers/auth";
 
 const Login = () => {
     const dispatch = useDispatch()
-    const {
-        error, loading
-    } = useSelector((state) => state.auth)
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter()
     const validationSchema = Yup.object().shape({
@@ -22,15 +21,27 @@ const Login = () => {
             .min(8, 'Password must be at least 8 characters')
             .required('Password is required'),
     });
-    const url = "https://68xkph-8888.preview.csb.app/auth/login"
     const handleSubmit = async (value) => {
-        const email = value.email
-        const password = value.password
-        if(value){
-            alert("Login berhasil")
+        try {
+            const email = value.email
+            const password = value.password
+            const response = await http().post('/auth/login', value)
+            const token = response?.data?.results?.token
+            dispatch(loginAction (token))
+            router.push('/home')
+        } catch (error) {
+            console.log(error)
         }
-        dispatch(loginAction({email, password, cb: ()=> router.push("/home")}))
-    };
+    }
+    // const url = "https://68xkph-8888.preview.csb.app/auth/login"
+    // const handleSubmit = async (value) => {
+    //     const email = value.email
+    //     const password = value.password
+    //     if(value){
+    //         alert("Login berhasil")
+    //     }
+    //     dispatch(loginAction({email, password, cb: ()=> router.push("/home")}))
+    // };
     const formik = useFormik({
         initialValues: {
             email: '',
