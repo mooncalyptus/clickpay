@@ -27,7 +27,7 @@ const Navbar = () => {
             fetchProfile()
         }
     }, [token])
-    console.log(profile)
+    // console.log(profile)
     return (
         <>
             <div className="flex bg-[#82C3EC] font-nunito">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import http from "../src/helpers/http";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,25 +11,33 @@ import withAuth from "../components/hoc/withAuth";
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false)
-    const token = useSelector((state)=> state.auth.token)
+    const token = useSelector((state) => state.auth.token)
     const [profile, setProfile] = useState(false)
-    // const fetchProfile = async () => {
-    //     try {
-    //       const response = await http().get("/profile", {
-    //         headers:  {
-    //             "Content-Type": "application/json",
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       });
-    //       setProfile(response.data.results);
-    //     } catch (error) {
-    //       if (error) throw error;
-    //     }
-    //   };
-    //   React.useEffect(()=>{
-    //     fetchProfile()
-    // }, [])
-    console.log(profile)
+    const [amount, setAmount] = useState('')
+    const fetchProfile = async () => {
+        try {
+            const response = await http(token).get("/profile")
+            setProfile(response?.data?.results)
+        } catch (error) {
+            if (error) throw error
+        }
+    }
+    React.useEffect(() => {
+        fetchProfile()
+    }, [])
+
+    const TopUp = async (e) => {
+        try{
+            e.preventDefault()
+            const {data} = await http(token).post("/transactions/topup", {amount})
+            alert("Saldo berhasil ditambahkan")
+            fetchProfile()
+            document.getElementById('my-modal-3').click()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    // console.log(profile)
     return (
         <>
             <Navbar></Navbar>
@@ -45,13 +53,13 @@ const Home = () => {
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                             <Link href="/search-receiver"><span className="text-[#3A3D42] opacity-80">Transfer</span></Link>
+                            <Link href="/search-receiver"><span className="text-[#3A3D42] opacity-80">Transfer</span></Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                            <button className="text-[#3A3D42] opacity-80" onClick={()=> setShowModal(true)}>Top Up</button>
-                            <ModalTopUp isVisible={showModal} onClose={()=> setShowModal(false)}></ModalTopUp>
+                            <button className="text-[#3A3D42] opacity-80" onClick={() => setShowModal(true)}>Top Up</button>
+                            <ModalTopUp isVisible={showModal} onClose={() => setShowModal(false)}></ModalTopUp>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -74,7 +82,7 @@ const Home = () => {
                         <div className="flex flex-col mr-[400px] justify-center pl-[30px]">
                             <span className="text-lg text-[#E0E0E0]">Balance</span>
                             <span className="text-[40px] fon-bold text-white">{profile?.balance}</span>
-                            <span className="text-sm text-[#E0E0E0] font-semibold">+62 813-9387-7946</span>
+                            <span className="text-sm text-[#E0E0E0] font-semibold">{profile?.phoneNumber}</span>
                         </div>
                         <div className="flex flex-col gap-4 justify-center items-center pr-[30px] py-[30px]">
                             <button className="flex bg-white text-[#82C3EC] rounded-md p-4">
@@ -82,10 +90,32 @@ const Home = () => {
                                 <span>Transfer</span>
                             </button>
 
-                            <button className="flex bg-white text-[#82C3EC] rounded-md p-4" onClick={()=> setShowModal(true)}>
+                            {/* <button className="flex bg-white text-[#82C3EC] rounded-md p-4" onClick={()=> setShowModal(true)}>
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                                 <span>Top Up</span>
-                            </button>
+                            </button> */}
+                            {/* The button to open modal */}
+                            <label htmlFor="my-modal-3" className="btn btn-info">Top Up</label>
+
+                            {/* Put this part before </body> tag */}
+                            <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+                            <div className="modal">
+                                <div className="modal-box relative">
+                                    <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                    <div className="px-8">
+                                        <h3 className="text-lg font-bold">Top up</h3>
+                                        <p className="py-4">Enter the amount of money, and click submit</p>
+                                        <form onSubmit={TopUp}>
+                                            <div className="flex flex-col">
+                                                <input type="text" placeholder="Type here" className="input input-bordered input-info w-full max-w-xs" id="amount" onChange={e => setAmount(e.target.value)}/>
+                                                <div className="flex justify-end mt-4">
+                                                    <button type="submit" className="btn btn-outline btn-info w-20">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

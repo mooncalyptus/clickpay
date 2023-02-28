@@ -49,23 +49,10 @@ const Profile = () => {
             }
         }
     }
-    // const fetchProfile = async () => {
-    //     try {
-    //         const response = await axios.get("https://68xkph-8888.preview.csb.app/profile", {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         });
-    //         setProfile(response.data.results);
-    //     } catch (error) {
-    //         if (error) throw error;
-    //     }
-    // };
     React.useEffect(() => {
         fetchProfile()
     }, [])
-    console.log(profile)
+    // console.log(profile)
 
     const LogoutProcess = () => {
         dispatch(logoutAction())
