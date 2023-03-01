@@ -14,6 +14,9 @@ const Home = () => {
     const token = useSelector((state) => state.auth.token)
     const [profile, setProfile] = useState(false)
     const [amount, setAmount] = useState('')
+    const [transPage, setTransPage] = React.useState(1)
+    const [transLimit, setTransLimit] = React.useState(5)
+    const [transHistory, setTransHistory] = React.useState([])
     const fetchProfile = async () => {
         try {
             const response = await http(token).get("/profile")
@@ -22,14 +25,17 @@ const Home = () => {
             if (error) throw error
         }
     }
+
+    // console.log(transHistory)
     React.useEffect(() => {
         fetchProfile()
-    }, [])
+        TransactionHistory()
+    }, [transPage, transLimit])
 
     const TopUp = async (e) => {
-        try{
+        try {
             e.preventDefault()
-            const {data} = await http(token).post("/transactions/topup", {amount})
+            const { data } = await http(token).post("/transactions/topup", { amount })
             alert("Saldo berhasil ditambahkan")
             fetchProfile()
             document.getElementById('my-modal-3').click()
@@ -37,7 +43,15 @@ const Home = () => {
             console.log(error)
         }
     }
-    // console.log(profile)
+
+    const TransactionHistory = async () => {
+        try {
+            const response = await http(token).get(`/transactions?page=${transPage}&limit=${transLimit}`)
+            setTransHistory(response?.data?.results)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <>
             <Navbar></Navbar>
@@ -85,17 +99,10 @@ const Home = () => {
                             <span className="text-sm text-[#E0E0E0] font-semibold">{profile?.phoneNumber}</span>
                         </div>
                         <div className="flex flex-col gap-4 justify-center items-center pr-[30px] py-[30px]">
-                            <button className="flex bg-white text-[#82C3EC] rounded-md p-4">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                                <span>Transfer</span>
-                            </button>
+                            <button className="btn btn-info w-28">Transfer</button>
 
-                            {/* <button className="flex bg-white text-[#82C3EC] rounded-md p-4" onClick={()=> setShowModal(true)}>
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                                <span>Top Up</span>
-                            </button> */}
                             {/* The button to open modal */}
-                            <label htmlFor="my-modal-3" className="btn btn-info">Top Up</label>
+                            <label htmlFor="my-modal-3" className="btn btn-info w-28">Top Up</label>
 
                             {/* Put this part before </body> tag */}
                             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -107,7 +114,7 @@ const Home = () => {
                                         <p className="py-4">Enter the amount of money, and click submit</p>
                                         <form onSubmit={TopUp}>
                                             <div className="flex flex-col">
-                                                <input type="text" placeholder="Type here" className="input input-bordered input-info w-full max-w-xs" id="amount" onChange={e => setAmount(e.target.value)}/>
+                                                <input type="text" placeholder="Type here" className="input input-bordered input-info w-full max-w-xs" id="amount" onChange={e => setAmount(e.target.value)} />
                                                 <div className="flex justify-end mt-4">
                                                     <button type="submit" className="btn btn-outline btn-info w-20">Submit</button>
                                                 </div>
@@ -144,64 +151,32 @@ const Home = () => {
 
                         <div className="mt-5 ml-5 bg-white rounded-md px-[30px] py-[30px]">
                             <div className="flex">
-                                <span className="font-bold text-lg grow">Transaction History</span>
-                                <Link href="/history"> <span className="text-lg font-bold">View All</span></Link>
-                            </div>
-                            <div className="flex mt-8">
-                                <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                                <div className="flex ml-[15px]">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-base">Samuel Suhi</span>
-                                        <span className="text-sm text-[#7A7886]">Accept</span>
-                                    </div>
-                                    <div className="ml-[30px]">
-                                        <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                                    </div>
-                                </div>
+                                <span className="font-bold text-lg">Transaction History</span>
+                                <Link href="/history"> <span className="text-lg font-bold ml-4">View All</span></Link>
                             </div>
 
-                            <div className="flex mt-8">
-                                <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                                    <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                                </div>
-                                <div className="flex ml-[15px]">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-base">Netflix</span>
-                                        <span className="text-sm text-[#7A7886]">Transfer</span>
-                                    </div>
-                                    <div className="ml-[60px]">
-                                        <span className="font-bold text-[#FF5B37] text-base">-Rp149.000</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex mt-8">
-                                <Image src={require('../assets/1.png')} alt="desc" ></Image>
-                                <div className="flex ml-[15px]">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-base">Christine Mar...</span>
-                                        <span className="text-sm text-[#7A7886]">Accept</span>
-                                    </div>
-                                    <div>
-                                        <span className="font-bold text-[#1EC15F] text-base">+Rp150.000</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex mt-8">
-                                <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                                    <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                                </div>
-                                <div className="flex ml-[15px]">
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-base">Robert Chandler</span>
-                                        <span className="text-sm text-[#7A7886]">Topup</span>
-                                    </div>
-                                    <div>
-                                        <span className="font-bold text-[#FF5B37] text-base">+Rp249.000</span>
-                                    </div>
-                                </div>
-                            </div>
+                            {transHistory.map(item => {
+                                return (
+                                    <>
+                                        <div className="flex mt-8">
+                                            {item.recipientPicture ? (
+                                                <Image src={"https://68xkph-8888.preview.csb.app/upload/" + (item.recipientPicture)} alt="desc" width={30} height={30}></Image>
+                                            ) : (
+                                                <Image src={require('../assets/profile.png')} alt="desc" ></Image>
+                                            )}
+                                            <div className="flex ml-[15px]">
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-base">{item.recipientname}</span>
+                                                    <span>{item.notes}</span>
+                                                </div>
+                                                <div className="ml-[30px]">
+                                                    <span className="font-bold text-[#1EC15F] text-base">+ {item.amount}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
