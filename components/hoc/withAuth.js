@@ -11,6 +11,8 @@ const withAuth = (Components) => {
         React.useEffect(() => {
             if (!token) {
                 router.push("/login")
+            } else {
+                router.push("/home")
             }
         }, [token])
         return <Components {...props} />

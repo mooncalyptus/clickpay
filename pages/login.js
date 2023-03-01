@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '@iconify/react';
 import { login as loginAction } from "../src/redux/reducers/auth";
+import withAuth from "../components/hoc/withAuth";
 
 const Login = () => {
     const dispatch = useDispatch()

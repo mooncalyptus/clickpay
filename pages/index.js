@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "../components/footer";
+import withAuth from "../components/hoc/withAuth";
 
 const Home = () => {
   return (
@@ -162,4 +163,5 @@ const Home = () => {
   )
 }
 
-export default Home;
+// export default Home;
+export default withAuth(Home)

@@ -1,9 +1,30 @@
+import React from "react";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
+import http from "../src/helpers/http";
 
 const History = () => {
+    const token = useSelector((state) => state.auth.token)
+    const [transPage, setTransPage] = React.useState(1)
+    const [transLimit, setTransLimit] = React.useState(5)
+    const [transHistory, setTransHistory] = React.useState([])
+
+    const TransactionHistory = async () => {
+        try {
+            const response = await http(token).get(`/transactions?page=${transPage}&limit=${transLimit}`)
+            setTransHistory(response?.data?.results)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    console.log(transHistory)
+    React.useEffect(() => {
+        TransactionHistory()
+    }, [transPage, transLimit])
     return (
         <>
             <Navbar></Navbar>
@@ -44,91 +65,32 @@ const History = () => {
                         <span className="font-bold text-lg grow">Transaction History</span>
                         <select className="select select-bordered">
                             <option disabled selected>--Select Filter--</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
+                            <option>-</option>
+                            <option>-</option>
                         </select>
                     </div>
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                            <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                        </div>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Netflix</span>
-                                <span className="text-sm text-[#7A7886]">Transfer</span>
-                            </div>
-                            <div className="ml-[60px]">
-                                <span className="font-bold text-[#FF5B37] text-base">-Rp149.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/1.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Christine Mar...</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div>
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp150.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                            <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                        </div>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Robert Chandler</span>
-                                <span className="text-sm text-[#7A7886]">Topup</span>
-                            </div>
-                            <div>
-                                <span className="font-bold text-[#FF5B37] text-base">+Rp249.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
+                    {transHistory.map(item => {
+                        return (
+                            <>
+                                <div className="flex mt-8">
+                                    {item.recipientPicture ? (
+                                        <Image src={"https://68xkph-8888.preview.csb.app/upload/" + (item.recipientPicture)} alt="desc" width={30} height={30}></Image>
+                                    ) : (
+                                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
+                                    )}
+                                    <div className="flex ml-[15px] w-full">
+                                        <div className="flex flex-col grow">
+                                            <span className="font-bold text-base">{item.recipientname}</span>
+                                            <span className="text-sm text-[#7A7886]">{item.notes}</span>
+                                        </div>
+                                        <div>
+                                            <span className="font-bold text-[#1EC15F] text-base">+ {item.amount}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    })}
                 </div>
             </div>
             <FooterUser></FooterUser>
