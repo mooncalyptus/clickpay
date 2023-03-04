@@ -9,9 +9,9 @@ import { useRef, useState } from "react";
 const PinBlank = () => {
     const token = useSelector((state) => state.auth.token)
     const decode = jwt_decode(token)
-    console.log(decode)
+    // console.log(decode)
     const userId = decode.id
-    console.log(userId)
+    // console.log(userId)
     const router = useRouter()
 
     const [pin1, setPin1] = useState(0);

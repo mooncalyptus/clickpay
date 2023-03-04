@@ -99,7 +99,7 @@ const Home = () => {
                             <span className="text-sm text-[#E0E0E0] font-semibold">{profile?.phoneNumber}</span>
                         </div>
                         <div className="flex flex-col gap-4 justify-center items-center pr-[30px] py-[30px]">
-                            <button className="btn btn-info w-28">Transfer</button>
+                           <Link href="/search-receiver"> <button className="btn btn-info w-28">Transfer</button> </Link>
 
                             {/* The button to open modal */}
                             <label htmlFor="my-modal-3" className="btn btn-info w-28">Top Up</label>

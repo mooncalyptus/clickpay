@@ -1,12 +1,32 @@
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import http from "../src/helpers/http";
+import { useSelector } from "react-redux";
 import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
 import ModalTopUp from "../components/modal-topup";
-import { useState } from "react";
 
 const SearchReceiver = () => {
+    const [searchRecipient, setSearchRecipient] = useState([])
+    const [searchPage, setSearchPage] = useState(1)
+    const [searchLimit, setSearchLimit] = useState(5)
     const [showModal, setShowModal] = useState(false)
+    const token = useSelector((state) => state.auth.token)
+
+    const ListRecipient = async () => {
+        try {
+            const response = await http(token).get(`/transactions/recipient?page=${searchPage}&limit=${searchLimit}`)
+            setSearchRecipient(response?.data?.results)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // console.log(searchRecipient)
+    React.useEffect(() => {
+        ListRecipient()
+    }, [searchPage, searchLimit])
     return (
         <>
             <Navbar></Navbar>
@@ -16,7 +36,7 @@ const SearchReceiver = () => {
                     <div className="h-screen">
                         <div className="flex gap-x-5">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                           <Link href="/home"> <span className="text-[#3A3D42] opacity-80">Dashboard</span></Link>
+                            <Link href="/home"> <span className="text-[#3A3D42] opacity-80">Dashboard</span></Link>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -26,8 +46,8 @@ const SearchReceiver = () => {
 
                         <div className="flex gap-x-5 mt-[52px]">
                             <svg className="w-6 h-6 text-[#3A3D42] opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                            <button className="text-[#3A3D42] opacity-80" onClick={()=> setShowModal(true)}>Top Up</button>
-                            <ModalTopUp isVisible={showModal} onClose={()=> setShowModal(false)}></ModalTopUp>
+                            <button className="text-[#3A3D42] opacity-80" onClick={() => setShowModal(true)}>Top Up</button>
+                            <ModalTopUp isVisible={showModal} onClose={() => setShowModal(false)}></ModalTopUp>
                         </div>
 
                         <div className="flex gap-x-5 mt-[52px]">
@@ -58,87 +78,33 @@ const SearchReceiver = () => {
                         </div>
                     </form>
 
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                            <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                        </div>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Netflix</span>
-                                <span className="text-sm text-[#7A7886]">Transfer</span>
-                            </div>
-                            <div className="ml-[60px]">
-                                <span className="font-bold text-[#FF5B37] text-base">-Rp149.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/1.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Christine Mar...</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div>
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp150.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <div className="bg-[#EBEEF2] w-14 h-14 flex justify-center items-center rounded-md">
-                            <Image src={require('../assets/net.png')} alt="desc" ></Image>
-                        </div>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Robert Chandler</span>
-                                <span className="text-sm text-[#7A7886]">Topup</span>
-                            </div>
-                            <div>
-                                <span className="font-bold text-[#FF5B37] text-base">+Rp249.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex mt-8">
-                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
-                        <div className="flex ml-[15px] w-full">
-                            <div className="flex flex-col grow">
-                                <span className="font-bold text-base">Samuel Suhi</span>
-                                <span className="text-sm text-[#7A7886]">Accept</span>
-                            </div>
-                            <div className="ml-[30px]">
-                                <span className="font-bold text-[#1EC15F] text-base">+Rp50.000</span>
-                            </div>
-                        </div>
-                    </div>
+                    {searchRecipient.map(item => {
+                        return (
+                            <>
+                                <Link href={"/input-amount"}>  
+                                <div className="flex mt-8">
+                                    {item.picture ? (
+                                        <Image src={"https://68xkph-8888.preview.csb.app/upload/" + (item.picture)} alt="desc" width={30} height={30} className="rounded"></Image>
+                                    ) : (
+                                        <Image src={require('../assets/profile.png')} alt="desc" ></Image>
+                                    )}
+                                    <div className="flex ml-[15px] w-full">
+                                        <div className="flex flex-col grow">
+                                            <span className="font-bold text-base">{item.firstName} {item.lastName}</span>
+                                            {item.phoneNumber ? (
+                                                <span className="text-sm text-[#7A7886]">{item.phoneNumber}</span>
+                                            ) : (
+                                                <span className="text-sm text-[#7A7886]"> - </span>
+                                            )}
+                                        </div>
+                                        <div className="ml-[30px]">
+                                        </div>
+                                    </div>
+                                </div>
+                                </Link>
+                            </>
+                        )
+                    })}
                 </div>
             </div>
 

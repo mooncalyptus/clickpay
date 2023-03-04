@@ -1,8 +1,99 @@
+import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Image from "next/image";
+import jwt_decode from "jwt-decode";;
+import http from "../src/helpers/http";
+import { useRouter } from "next/router";
 import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
 
 const ChangePin = () => {
+    const token = useSelector((state) => state.auth.token)
+    const decode = jwt_decode(token)
+    const userId = decode.id
+    const router = useRouter()
+
+    const [pin1, setPin1] = useState(0)
+    const [pin2, setPin2] = useState(0)
+    const [pin3, setPin3] = useState(0)
+    const [pin4, setPin4] = useState(0)
+    const [pin5, setPin5] = useState(0)
+    const [pin6, setPin6] = useState(0)
+
+    const input1 = useRef(null)
+    const input2 = useRef(null)
+    const input3 = useRef(null)
+    const input4 = useRef(null)
+    const input5 = useRef(null)
+    const input6 = useRef(null)
+
+    const createPin = async (e) => {
+        e.preventDefault()
+        const pin1 = e.target.pin1.value
+        const pin2 = e.target.pin2.value
+        const pin3 = e.target.pin3.value
+        const pin4 = e.target.pin4.value
+        const pin5 = e.target.pin5.value
+        const pin6 = e.target.pin6.value
+
+        let newPin = ""
+        newPin += pin1
+        newPin += pin2
+        newPin += pin3
+        newPin += pin4
+        newPin += pin5
+        newPin += pin6
+
+        try {
+            const { data } = await http().post("/auth/set-pin", { newPin })
+            alert('Change Pin Success')
+            router.push("/profile")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const changeInput = (e) => {
+        if (e.target.value.length > 1) {
+            e.target.valeu = e.target.value.slice(0, 1)
+        }
+
+        if (e.target.value.length) {
+            if (e.target.name === "pin1") {
+                input2.current.focus();
+            }
+            if (e.target.name === "pin2") {
+                input3.current.focus();
+            }
+            if (e.target.name === "pin3") {
+                input4.current.focus();
+            }
+            if (e.target.name === "pin4") {
+                input5.current.focus();
+            }
+            if (e.target.name === "pin5") {
+                input6.current.focus();
+            }
+        }
+
+        if (!e.target.value.length) {
+            if (e.target.name === "pin2") {
+                input1.current.focus();
+            }
+            if (e.target.name === "pin3") {
+                input2.current.focus();
+            }
+            if (e.target.name === "pin4") {
+                input3.current.focus();
+            }
+            if (e.target.name === "pin5") {
+                input4.current.focus();
+            }
+            if (e.target.name === "pin6") {
+                input5.current.focus();
+            }
+        }
+    }
     return (
         <>
             <Navbar></Navbar>
@@ -40,45 +131,109 @@ const ChangePin = () => {
                 {/* Konten kanan */}
                 <div className="ml-5 mr-[5%] w-full bg-white rounded-md pl-[50px] py-[30px] pr-[30px]">
                     <div className="flex center-items">
-                        <span className="font-bold text-lg grow">Change Password</span>
+                        <span className="font-bold text-lg grow">Change Pin</span>
                     </div>
-                    <div className="text-base text-[#7A7886] mt-[25px]">
-                        <div>You must enter your current password and then</div>
-                        <div>type your new password twice.</div>
-                    </div>
-
-                    <div className="relative mb-6 w-80">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        </div>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                        </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
+                    <div className="text-base text-[#7A7886] my-[25px]">
+                        <span>Enter your current 6 digits ClickPay PIN below to continue to the next steps.</span>
                     </div>
 
-                    <div className="relative mb-6 w-80">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        </div>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                        </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
-                    </div>
+                    {/* Form PIN */}
+                    <div>
+                    <form className="pt-[5%]" onSubmit={createPin}>
+                        <div className="flex gap-[23px] justify-center">
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin1 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin1(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin1 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input1}
+                                    name="pin1"
+                                    id="pin1"
+                                    maxLength="1"
+                                />
+                            </div>
 
-                    <div className="relative mb-6 w-80">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        </div>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                        </div>
-                        <input type="text" id="input-group-1" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Input your Password"></input>
-                    </div>
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin2 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin2(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin2 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input2}
+                                    name="pin2"
+                                    id="pin2"
+                                    maxLength="1"
+                                />
+                            </div>
 
-                    <button className="bg-[#82C3EC] w-80 py-4 rounded-lg">Change Password</button>
-                    
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin3 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin3(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin3 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input3}
+                                    name="pin3"
+                                    id="pin3"
+                                    maxLength="1"
+                                />
+                            </div>
+
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin4 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin4(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin4 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input4}
+                                    name="pin4"
+                                    id="pin4"
+                                    maxLength="1"
+                                />
+                            </div>
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin5 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin5(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin5 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input5}
+                                    name="pin5"
+                                    id="pin5"
+                                    maxLength="1"
+                                />
+                            </div>
+                            <div className={`bg-white rounded-xl text-center px-1 py-2 border-[1px] ${pin6 ? "border-[#2C74B3]" : "border-[#A9A9A9]"}`}>
+                                <input
+                                    onChange={(e) => {
+                                        setPin6(e.target.value.length);
+                                        return changeInput(e);
+                                    }}
+                                    className={`grow no_arrows w-[53px] h-[65px] rounded-md border-[#A9A9A9] focus:outline-none text-4xl text-center ${pin6 ? null : "border-b-[1px]"}`}
+                                    type="number"
+                                    ref={input6}
+                                    name="pin6"
+                                    id="pin6"
+                                    maxLength="1"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex justify-center mt-[10%]">
+                            <button type="submit" class={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${pin1 && pin2 && pin3 && pin4 && pin5 && pin6 ? "bg-[#2C74B3]" : "bg-[#DADADA]"}`} disabled={pin1 && pin2 && pin3 && pin4 && pin5 && pin6 ? false : true}>Submit</button>
+                        </div>
+                    </form>
+                    </div>
                 </div>
             </div>
             <FooterUser></FooterUser>

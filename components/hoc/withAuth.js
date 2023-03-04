@@ -10,7 +10,7 @@ const withAuth = (Components) => {
         const token = useSelector((state) => state.auth.token);
         React.useEffect(() => {
             if (!token) {
-                router.push("/login")
+                router.push("/")
             } else {
                 router.push("/home")
             }

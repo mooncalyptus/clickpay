@@ -1,8 +1,14 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import http from "../src/helpers/http";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import FooterUser from "../components/footerUser";
 import Navbar from "../components/navbar";
 
 const InputAmount = () => {
+    const token = useSelector((state) => state.auth.token)
+
     return (
         <>
             <Navbar></Navbar>
